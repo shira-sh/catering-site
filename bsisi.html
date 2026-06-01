@@ -134,6 +134,56 @@
       display: block;
     }
 
+    .panel-hidden {
+      display: none;
+    }
+
+    .category-step-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .category-card {
+      appearance: none;
+      border: 1px solid rgba(27, 54, 48, .18);
+      background: #fff;
+      color: #1b3630;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
+      transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease, opacity .15s ease;
+    }
+
+    .category-card:hover,
+    .category-card:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(27, 54, 48, .45);
+      outline: none;
+    }
+
+    .category-card--disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+
+    .category-card--shake {
+      animation: shake 0.22s ease;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+      100% { transform: translateX(0); }
+    }
+
     @media (max-width: 700px) {
       .menu-tabs {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -304,21 +354,9 @@
           <select id="servings" aria-label="מספר מנות"></select>
         </div>
 
-        <!-- Menu Tabs -->
-        <div class="menu-tabs" role="tablist" aria-label="קטגוריות לבחירת תפריט">
-          <button class="menu-tab is-active" type="button" role="tab" id="tab-salads" aria-controls="panel-salads"
-            aria-selected="true">סלטים</button>
-          <button class="menu-tab" type="button" role="tab" id="tab-sides" aria-controls="panel-sides"
-            aria-selected="false">תוספות</button>
-          <button class="menu-tab" type="button" role="tab" id="tab-mains" aria-controls="panel-mains"
-            aria-selected="false">מנות עיקריות</button>
-          <button class="menu-tab" type="button" role="tab" id="tab-breads" aria-controls="panel-breads"
-            aria-selected="false">לחמים</button>
-        </div>
-
         <!-- Salads -->
-        <div class="section menu-panel is-active" id="panel-salads" role="tabpanel" aria-labelledby="tab-salads">
-          <h3 class="section-title">סלטים</h3>
+        <div class="section menu-panel is-active" id="panel-salads" role="region" aria-labelledby="panel-salads-title">
+          <h3 class="section-title" id="panel-salads-title">סלטים</h3>
           <div class="section-sub hint-blink">
             יש לסמן תחילה את סוג הסלט לפני בחירת כמות · ניתן לראות תמונה בלחיצה על העין
           </div>
@@ -326,77 +364,44 @@
 
           <div id="salads" class="grid" aria-label="רשימת סלטים"></div>
 
-          <!-- Menu Tabs Repeat -->
-          <div class="menu-tabs" role="tablist" aria-label="קטגוריות לבחירת תפריט" style="margin-top: 28px;">
-            <button class="menu-tab is-active" type="button" role="tab" id="tab-salads" aria-controls="panel-salads"
-              aria-selected="true">סלטים</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-sides" aria-controls="panel-sides"
-              aria-selected="false">תוספות</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-mains" aria-controls="panel-mains"
-              aria-selected="false">מנות עיקריות</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-breads" aria-controls="panel-breads"
-              aria-selected="false">לחמים</button>
+          <div class="category-step-row" aria-label="בחירת קטגוריה הבאה">
+            <button class="category-card category-card--active" type="button" data-open-panel="panel-sides">תוספות</button>
+            <button class="category-card category-card--disabled" type="button" data-open-panel="panel-mains">מנות עיקריות</button>
+            <button class="category-card category-card--disabled" type="button" data-open-panel="panel-breads">לחמים</button>
           </div>
         </div>
 
         <!-- Sides -->
-        <div class="section menu-panel" id="panel-sides" role="tabpanel" aria-labelledby="tab-sides">
-          <h3 class="section-title">תוספות</h3>
+        <div class="section menu-panel" id="panel-sides" role="region" aria-labelledby="panel-sides-title">
+          <h3 class="section-title" id="panel-sides-title">תוספות</h3>
           <div id="sides-remaining" class="remaining-hint is-ok" aria-live="polite"></div>
 
           <div id="sides" class="grid" aria-label="רשימת תוספות"></div>
 
-          <!-- Menu Tabs Repeat -->
-          <div class="menu-tabs" role="tablist" aria-label="קטגוריות לבחירת תפריט" style="margin-top: 28px;">
-            <button class="menu-tab" type="button" role="tab" id="tab-salads" aria-controls="panel-salads"
-              aria-selected="false">סלטים</button>
-            <button class="menu-tab is-active" type="button" role="tab" id="tab-sides" aria-controls="panel-sides"
-              aria-selected="true">תוספות</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-mains" aria-controls="panel-mains"
-              aria-selected="false">מנות עיקריות</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-breads" aria-controls="panel-breads"
-              aria-selected="false">לחמים</button>
+          <div class="category-step-row" aria-label="בחירת קטגוריה הבאה">
+            <button class="category-card category-card--active" type="button" data-open-panel="panel-mains">מנות עיקריות</button>
+            <button class="category-card category-card--disabled" type="button" data-open-panel="panel-breads">לחמים</button>
           </div>
         </div>
 
         <!-- Mains -->
-        <div class="section menu-panel" id="panel-mains" role="tabpanel" aria-labelledby="tab-mains">
-          <h3 class="section-title">מנות עיקריות</h3>
+        <div class="section menu-panel" id="panel-mains" role="region" aria-labelledby="panel-mains-title">
+          <h3 class="section-title" id="panel-mains-title">מנות עיקריות</h3>
           <div class="section-sub">המקסימום הכולל נקבע לפי מספר המנות שבחרת</div>
           <div id="mains-remaining" class="remaining-hint is-ok" aria-live="polite"></div>
 
           <div id="mains" class="grid" aria-label="רשימת עיקריות"></div>
 
-          <!-- Menu Tabs Repeat -->
-          <div class="menu-tabs" role="tablist" aria-label="קטגוריות לבחירת תפריט" style="margin-top: 28px;">
-            <button class="menu-tab" type="button" role="tab" id="tab-salads" aria-controls="panel-salads"
-              aria-selected="false">סלטים</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-sides" aria-controls="panel-sides"
-              aria-selected="false">תוספות</button>
-            <button class="menu-tab is-active" type="button" role="tab" id="tab-mains" aria-controls="panel-mains"
-              aria-selected="true">מנות עיקריות</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-breads" aria-controls="panel-breads"
-              aria-selected="false">לחמים</button>
+          <div class="category-step-row" aria-label="בחירת קטגוריה הבאה">
+            <button class="category-card category-card--active" type="button" data-open-panel="panel-breads">לחמים</button>
           </div>
         </div>
 
         <!-- לחמים -->
-        <div class="section menu-panel" id="panel-breads" role="tabpanel" aria-labelledby="tab-breads">
-          <h3 class="section-title">לחמים</h3>
+        <div class="section menu-panel" id="panel-breads" role="region" aria-labelledby="panel-breads-title">
+          <h3 class="section-title" id="panel-breads-title">לחמים</h3>
           <div id="breads-remaining" class="remaining-hint is-ok" aria-live="polite" aria-atomic="true"></div>
           <div id="breads" class="grid" aria-label="רשימת לחמים"></div>
-
-          <!-- Menu Tabs Repeat -->
-          <div class="menu-tabs" role="tablist" aria-label="קטגוריות לבחירת תפריט" style="margin-top: 28px;">
-            <button class="menu-tab" type="button" role="tab" id="tab-salads" aria-controls="panel-salads"
-              aria-selected="false">סלטים</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-sides" aria-controls="panel-sides"
-              aria-selected="false">תוספות</button>
-            <button class="menu-tab" type="button" role="tab" id="tab-mains" aria-controls="panel-mains"
-              aria-selected="false">מנות עיקריות</button>
-            <button class="menu-tab is-active" type="button" role="tab" id="tab-breads" aria-controls="panel-breads"
-              aria-selected="true">לחמים</button>
-          </div>
         </div>
 
         <div class="btn-row">
@@ -645,6 +650,7 @@
         if (type === "bread") return "<option>1</option>";
         if (type === "salad") return "<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option>";
         if (type === "side") return "<option>1</option><option>2</option><option>3</option>";
+        if (type === "starter") return "<option>1</option><option>2</option>";
         return "<option>10</option>";
       }
 
@@ -1838,53 +1844,39 @@ function buildItemsArray(data) {
 
 
       function initMenuTabs() {
-        var tabs = qsAll(".menu-tab");
         var panels = qsAll(".menu-panel");
-        if (!tabs || !tabs.length || !panels || !panels.length) return;
+        if (!panels || !panels.length) return;
 
-        function activateTab(tab) {
-          var targetId = tab.getAttribute("aria-controls");
-
-          for (var i = 0; i < tabs.length; i++) {
-            tabs[i].classList.remove("is-active");
-            tabs[i].setAttribute("aria-selected", "false");
+        for (var i = 0; i < panels.length; i++) {
+          if (i === 0) {
+            panels[i].classList.add("is-active");
+          } else {
+            panels[i].classList.remove("is-active");
           }
-
-          for (var j = 0; j < panels.length; j++) {
-            panels[j].classList.remove("is-active");
-          }
-
-          tab.classList.add("is-active");
-          tab.setAttribute("aria-selected", "true");
-
-          var panel = $(targetId);
-          if (panel) panel.classList.add("is-active");
         }
 
-        for (var k = 0; k < tabs.length; k++) {
-          (function (tab, index) {
-            tab.addEventListener("click", function () {
-              activateTab(tab);
+        var cards = qsAll(".category-card");
+        for (var k = 0; k < cards.length; k++) {
+          (function (card) {
+            card.addEventListener("click", function () {
+              if (card.classList.contains("category-card--disabled")) {
+                card.classList.add("category-card--shake");
+                window.setTimeout(function () {
+                  card.classList.remove("category-card--shake");
+                }, 220);
+                return;
+              }
+
+              var targetId = card.getAttribute("data-open-panel");
+              if (!targetId) return;
+
+              var targetPanel = $(targetId);
+              if (!targetPanel) return;
+
+              targetPanel.classList.add("is-active");
+              targetPanel.scrollIntoView({ behavior: "smooth", block: "start" });
             });
-
-            tab.addEventListener("keydown", function (e) {
-              var nextIndex = index;
-
-              if (e.key === "ArrowLeft") nextIndex = index + 1;
-              else if (e.key === "ArrowRight") nextIndex = index - 1;
-              else if (e.key === "Home") nextIndex = 0;
-              else if (e.key === "End") nextIndex = tabs.length - 1;
-              else return;
-
-              e.preventDefault();
-
-              if (nextIndex < 0) nextIndex = tabs.length - 1;
-              if (nextIndex >= tabs.length) nextIndex = 0;
-
-              tabs[nextIndex].focus();
-              activateTab(tabs[nextIndex]);
-            });
-          })(tabs[k], k);
+          })(cards[k]);
         }
       }
 
