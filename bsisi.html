@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 
 <head>
@@ -51,150 +51,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Fredoka:wght@300..700&family=Heebo:wght@100..600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="a11y-widget.css">
 
-  <!-- A11y / Utility (לא משנה עיצוב קיים; רק נגישות בסיסית) -->
-  <style>
-    .sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
-
-    .skip-link {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      z-index: 9999;
-      padding: 10px 12px;
-      background: #fff;
-      color: #000;
-      border: 2px solid currentColor;
-      border-radius: 8px;
-      transform: translateY(-140%);
-      transition: transform .15s ease;
-    }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-
-    /* Tabs for menu categories */
-    .menu-tabs {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin: 18px 0 22px;
-    }
-
-    .menu-tab {
-      appearance: none;
-      border: 1px solid rgba(27, 54, 48, .18);
-      background: #fff;
-      color: #1b3630;
-      border-radius: 16px;
-      padding: 14px 12px;
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
-      transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
-    }
-
-    .menu-tab:hover,
-    .menu-tab:focus-visible {
-      transform: translateY(-1px);
-      border-color: rgba(27, 54, 48, .45);
-      outline: none;
-    }
-
-    .menu-tab.is-active,
-    .menu-tab[aria-selected="true"] {
-      background: #1b3630;
-      color: #fff;
-      border-color: #1b3630;
-    }
-
-    .menu-panel {
-      display: none;
-    }
-
-    .menu-panel.is-active {
-      display: block;
-    }
-
-    .panel-hidden {
-      display: none;
-    }
-
-    .category-step-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 28px;
-    }
-
-    .category-card {
-      appearance: none;
-      border: 1px solid rgba(27, 54, 48, .18);
-      background: #fff;
-      color: #1b3630;
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, .06);
-      transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease, opacity .15s ease;
-    }
-
-    .category-card:hover,
-    .category-card:focus-visible {
-      transform: translateY(-1px);
-      border-color: rgba(27, 54, 48, .45);
-      outline: none;
-    }
-
-    .category-card--disabled {
-      opacity: .35;
-      cursor: not-allowed;
-    }
-
-    .category-card--shake {
-      animation: shake 0.22s ease;
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-3px); }
-      100% { transform: translateX(0); }
-    }
-
-    @media (max-width: 700px) {
-      .menu-tabs {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .menu-tab {
-        padding: 12px 8px;
-        font-size: .95rem;
-      }
-    }
-  </style>
 
   <script src="a11y-widget.js" defer></script>
 
@@ -281,9 +143,7 @@
 <body class="page-basic">
   <!-- Skip link לנגישות -->
   <a class="skip-link" href="#mainContent">דילוג לתוכן הראשי</a>
-  <a class="top-home-link" href="index.html" aria-label="חזרה לדף הבית">חזרה לדף הבית</a>
-
-  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+<svg aria-hidden="true" class="svg-sprite" xmlns="http://www.w3.org/2000/svg">
     <symbol id="gi-phone" viewBox="0 0 24 24">
       <path
         d="M7 3h3l1.2 5-2.1 1.3a13.5 13.5 0 0 0 5.6 5.6L16 12.8 21 14v3c0 1.1-.9 2-2 2C10.2 19 5 13.8 5 5c0-1.1.9-2 2-2Z"
@@ -307,11 +167,90 @@
   <!-- HEADER -->
   <header class="top-header" role="banner">
     <div class="header-inner">
+        <a class="top-home-link" href="index.html" aria-label="חזרה לדף הבית"><span aria-hidden="true">‹</span> חזרה לדף הבית</a>
       <img src="assets/logo.png" class="logo" alt="לוגו גיליז" loading="eager" decoding="async">
       <!-- נשאר כטקסט ויזואלי בלבד; ה-H1 היחיד הוא בתוך ה-HERO -->
       <p class="logoTitle" aria-hidden="true">דיל בסיסי</p>
       <img src="assets/kosher.png" class="kosher" alt="תעודת כשרות" loading="lazy" decoding="async">
     </div>
+   
+<div> <svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 800 120"
+     width="800"
+     height="120">
+
+    <g fill="none"
+       stroke="#D4AF37"
+       stroke-width="4"
+       stroke-linecap="round"
+       stroke-linejoin="round">
+
+        <!-- קו שמאל -->
+        <line x1="30" y1="60" x2="250" y2="60"/>
+
+        <!-- עלה שמאל -->
+        <path d="
+            M250 60
+            Q240 50 228 60
+            Q240 70 250 60
+        " fill="#D4AF37"/>
+
+        <!-- לולאה שמאלית -->
+        <path d="
+            M250 60
+            C260 35 300 35 310 60
+            C300 85 260 85 250 60
+        "/>
+
+        <!-- לולאה קטנה שמאל -->
+        <path d="
+            M305 60
+            C315 42 335 42 345 60
+            C335 78 315 78 305 60
+        "/>
+
+        <!-- לולאה מרכזית גדולה -->
+        <path d="
+            M340 60
+            C360 20 420 20 440 60
+            C420 100 360 100 340 60
+        "/>
+
+        <!-- טיפה פנימית -->
+        <path d="
+            M392 45
+            C405 52 405 67 392 76
+            C379 67 379 52 392 45
+        "/>
+
+        <circle cx="392" cy="61" r="3" fill="#D4AF37"/>
+
+        <!-- לולאה קטנה ימין -->
+        <path d="
+            M435 60
+            C445 42 465 42 475 60
+            C465 78 445 78 435 60
+        "/>
+
+        <!-- לולאה ימנית -->
+        <path d="
+            M470 60
+            C480 35 520 35 530 60
+            C520 85 480 85 470 60
+        "/>
+
+        <!-- עלה ימין -->
+        <path d="
+            M530 60
+            Q540 50 552 60
+            Q540 70 530 60
+        " fill="#D4AF37"/>
+
+        <!-- קו ימין -->
+        <line x1="552" y1="60" x2="770" y2="60"/>
+
+    </g></svg></div>
+
   </header>
 
   <!-- ניווט מינימלי לזחילה (לא משנה עיצוב) -->
@@ -333,6 +272,49 @@
   <!-- HERO -->
   <section class="hero" aria-label="כותרת עמוד תפריט">
     <div>
+      <svg class="deal-hero-ornament" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 550 145"
+        width="100%"
+        height="145"
+        aria-hidden="true">
+
+        <defs>
+          <linearGradient id="goldTrace" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFF4B8"/>
+            <stop offset="22%" stop-color="#F6D97A"/>
+            <stop offset="45%" stop-color="#D6A646"/>
+            <stop offset="70%" stop-color="#9F681C"/>
+            <stop offset="100%" stop-color="#FFE08A"/>
+          </linearGradient>
+
+          <filter id="goldGlowTrace" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="1.35" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <path fill="url(#goldTrace)"
+          fill-rule="evenodd"
+          filter="url(#goldGlowTrace)"
+          d="
+M331 111L329 108L329 104L325 102L323 99L321 87L314 72L306 65L305 63L295 56L293 56L291 54L286 53L283 51L279 51L278 50L279 40L275 35L269 33L265 35L260 40L260 46L262 49L261 51L257 51L248 54L246 56L241 58L234 63L225 73L218 89L217 98L214 102L211 103L211 110L208 113L208 115L214 117L262 117L263 116L266 117L326 117L330 115Z
+M223 97L230 80L240 68L247 63L258 58L274 57L275 58L281 58L284 60L287 60L297 65L309 78L312 83L312 85L317 96L317 99L315 101L313 100L307 100L306 101L304 100L272 100L270 101L269 100L235 100L234 99L224 100Z
+M194 89L188 79L184 75L176 73L173 74L168 80L168 83L169 84L168 86L164 86L159 81L149 75L142 75L135 80L135 84L132 87L127 87L126 88L67 88L66 91L68 93L92 93L93 92L116 93L117 92L120 92L121 93L130 94L134 96L137 102L141 105L150 105L157 100L161 94L164 93L168 95L168 97L175 107L181 107L183 106L192 96L192 94L194 92Z
+M345 90L348 93L354 103L360 107L366 106L373 98L373 95L376 93L379 93L391 103L399 104L402 103L408 97L410 93L413 93L414 92L420 92L421 93L433 93L434 92L451 93L452 92L476 92L477 91L477 89L474 88L467 88L466 89L451 89L450 88L411 88L408 86L405 80L402 77L399 76L390 77L388 79L386 79L376 87L372 87L371 86L364 88L354 88L353 87L353 85L361 78L365 78L370 82L372 82L372 78L369 74L359 74L352 79Z
+M216 110L216 108L220 105L223 106L320 105L323 108L321 111L318 111L317 112L219 112Z
+M256 64L254 63L250 65L243 71L234 85L235 89L238 89L241 86L241 84L244 79L257 67Z
+M136 92L137 91L153 91L154 94L147 99L141 99L136 95Z
+M386 85L392 81L397 80L400 81L405 86L405 88L404 89L396 89L395 88L387 87Z
+M352 92L353 91L363 92L364 93L367 93L368 95L365 100L359 101L354 96Z
+M186 91L187 92L187 95L184 99L181 101L177 101L173 96L173 94L175 92L183 92Z
+M137 84L141 81L146 81L151 84L153 88L152 89L149 88L147 89L144 89L143 88L139 89L137 86Z
+M172 84L176 79L180 79L186 85L187 88L184 89L180 87L173 86Z
+M387 92L388 91L391 92L398 91L399 92L403 92L404 95L401 98L394 98L391 97Z
+M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
+      </svg>
       <h1>דיל בסיסי - החל מ־49 ₪</h1>
       <p>הדיל כולל: לחמניה אישית, 7 סוגי סלטים, 3 סוגי תוספות, 3 סוגי עיקריות.</p>
       <div class="pill">בחרו כאן למטה בקלות - ונחזור אליכם עם הצעת מחיר</div>
@@ -354,9 +336,10 @@
           <select id="servings" aria-label="מספר מנות"></select>
         </div>
 
-        <!-- Salads -->
-        <div class="section menu-panel is-active" id="panel-salads" role="region" aria-labelledby="panel-salads-title">
-          <h3 class="section-title" id="panel-salads-title">סלטים</h3>
+        <!-- Category 1: Salads -->
+        <div class="category-item">
+          <button class="category-card category-button" type="button" data-open-panel="panel-salads" aria-pressed="false"><span class="category-icon"></span> סלטים</button>
+          <div class="section menu-panel" id="panel-salads" role="region" aria-label="רשימת סלטים">
           <div class="section-sub hint-blink">
             יש לסמן תחילה את סוג הסלט לפני בחירת כמות · ניתן לראות תמונה בלחיצה על העין
           </div>
@@ -364,44 +347,42 @@
 
           <div id="salads" class="grid" aria-label="רשימת סלטים"></div>
 
-          <div class="category-step-row" aria-label="בחירת קטגוריה הבאה">
-            <button class="category-card category-card--active" type="button" data-open-panel="panel-sides">תוספות</button>
-            <button class="category-card category-card--disabled" type="button" data-open-panel="panel-mains">מנות עיקריות</button>
-            <button class="category-card category-card--disabled" type="button" data-open-panel="panel-breads">לחמים</button>
-          </div>
+      
         </div>
 
-        <!-- Sides -->
-        <div class="section menu-panel" id="panel-sides" role="region" aria-labelledby="panel-sides-title">
+        <!-- Category 2: Sides -->
+        <div class="category-item">
+          <button class="category-card category-button" type="button" data-open-panel="panel-sides" aria-pressed="false"><span class="category-icon"></span> תוספות</button>
+          <div class="section menu-panel" id="panel-sides" role="region" aria-labelledby="panel-sides-title">
           <h3 class="section-title" id="panel-sides-title">תוספות</h3>
           <div id="sides-remaining" class="remaining-hint is-ok" aria-live="polite"></div>
 
           <div id="sides" class="grid" aria-label="רשימת תוספות"></div>
 
-          <div class="category-step-row" aria-label="בחירת קטגוריה הבאה">
-            <button class="category-card category-card--active" type="button" data-open-panel="panel-mains">מנות עיקריות</button>
-            <button class="category-card category-card--disabled" type="button" data-open-panel="panel-breads">לחמים</button>
-          </div>
+       
         </div>
 
-        <!-- Mains -->
-        <div class="section menu-panel" id="panel-mains" role="region" aria-labelledby="panel-mains-title">
+        <!-- Category 3: Mains -->
+        <div class="category-item">
+          <button class="category-card category-button" type="button" data-open-panel="panel-mains" aria-pressed="false"><span class="category-icon"></span> מנות עיקריות</button>
+          <div class="section menu-panel" id="panel-mains" role="region" aria-labelledby="panel-mains-title">
           <h3 class="section-title" id="panel-mains-title">מנות עיקריות</h3>
           <div class="section-sub">המקסימום הכולל נקבע לפי מספר המנות שבחרת</div>
           <div id="mains-remaining" class="remaining-hint is-ok" aria-live="polite"></div>
 
           <div id="mains" class="grid" aria-label="רשימת עיקריות"></div>
 
-          <div class="category-step-row" aria-label="בחירת קטגוריה הבאה">
-            <button class="category-card category-card--active" type="button" data-open-panel="panel-breads">לחמים</button>
-          </div>
+     
         </div>
 
-        <!-- לחמים -->
-        <div class="section menu-panel" id="panel-breads" role="region" aria-labelledby="panel-breads-title">
+        <!-- Category 4: Breads -->
+        <div class="category-item">
+          <button class="category-card category-button" type="button" data-open-panel="panel-breads" aria-pressed="false"><span class="category-icon"></span> לחמים</button>
+          <div class="section menu-panel" id="panel-breads" role="region" aria-labelledby="panel-breads-title">
           <h3 class="section-title" id="panel-breads-title">לחמים</h3>
           <div id="breads-remaining" class="remaining-hint is-ok" aria-live="polite" aria-atomic="true"></div>
           <div id="breads" class="grid" aria-label="רשימת לחמים"></div>
+          </div>
         </div>
 
         <div class="btn-row">
@@ -454,8 +435,7 @@
           </div>
         </div>
 
-        <div id="formError" class="form-error" role="alert" aria-live="assertive" aria-atomic="true"
-          style="display:none;"></div>
+        <div id="formError" class="form-error u-hidden" role="alert" aria-live="assertive" aria-atomic="true"></div>
       </div>
 
       <div class="form-field">
@@ -476,7 +456,7 @@
   <script src="footer.js"></script>
 
   <!-- Floating CTA -->
-  <a id="floatingBtn" class="whatsapp" href="https://wa.me/972559314466" target="_blank" rel="noopener">
+  <a id="floatingBtn" class="whatsapp" href="https://wa.me/972559314466" target="_blank" rel="noopener" aria-label="הזמנה בוואטסאפ">
     💬 להזמנה בוואטסאפ
   </a>
 
@@ -1843,20 +1823,43 @@ function buildItemsArray(data) {
       }
 
 
+      function setActivePanel(targetId) {
+        var panels = qsAll(".menu-panel");
+        if (!panels || !panels.length) return;
+
+        var targetPanel = $(targetId);
+        if (!targetPanel) return;
+
+        var isActive = targetPanel.classList.toggle("is-active");
+        var activeToggle = document.querySelector('.category-button[data-open-panel="' + targetId + '"]');
+        if (activeToggle) {
+          activeToggle.setAttribute("aria-pressed", isActive ? "true" : "false");
+        }
+      }
+
+      function openMenuPanel(targetId) {
+        var targetPanel = $(targetId);
+        if (!targetPanel) return;
+
+        targetPanel.classList.add("is-active");
+
+        var activeToggle = document.querySelector('.category-button[data-open-panel="' + targetId + '"]');
+        if (activeToggle) {
+          activeToggle.setAttribute("aria-pressed", "true");
+        }
+      }
+
       function initMenuTabs() {
         var panels = qsAll(".menu-panel");
         if (!panels || !panels.length) return;
 
         for (var i = 0; i < panels.length; i++) {
-          if (i === 0) {
-            panels[i].classList.add("is-active");
-          } else {
-            panels[i].classList.remove("is-active");
-          }
+          panels[i].classList.remove("is-active");
         }
 
         var cards = qsAll(".category-card");
         for (var k = 0; k < cards.length; k++) {
+          cards[k].setAttribute("aria-pressed", "false");
           (function (card) {
             card.addEventListener("click", function () {
               if (card.classList.contains("category-card--disabled")) {
@@ -1870,14 +1873,12 @@ function buildItemsArray(data) {
               var targetId = card.getAttribute("data-open-panel");
               if (!targetId) return;
 
-              var targetPanel = $(targetId);
-              if (!targetPanel) return;
-
-              targetPanel.classList.add("is-active");
-              targetPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+              setActivePanel(targetId);
             });
           })(cards[k]);
         }
+
+        openMenuPanel("panel-salads");
       }
 
       function init() {
@@ -1922,3 +1923,10 @@ function buildItemsArray(data) {
   jsondata="%7B%22noteSite%22:%22%D7%9B%D7%93%D7%99%20%D7%A9%D7%94%D7%AA%D7%9E%D7%95%D7%A0%D7%95%D7%AA%20%D7%91%D7%90%D7%AA%D7%A8%20%D7%94%D7%96%D7%94%20%D7%99%D7%97%D7%96%D7%A8%D7%95%20%D7%9E%D7%91%D7%93%D7%99%D7%A7%D7%94%2C%20%D7%99%D7%A9%20%D7%9C%D7%94%D7%92%D7%93%D7%99%D7%A8%20%5C%22%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9C%D7%A1%D7%A0%D7%9F%20%D7%AA%D7%95%D7%9B%D7%9F%20%D7%A9%D7%99%D7%93%D7%95%D7%A2%20%D7%9B%D7%90%D7%99%D7%A9%D7%99%20%D7%90%D7%95%20%D7%A4%D7%A8%D7%98%D7%99%5C%22%20%D7%91%D7%94%D7%92%D7%93%D7%A8%D7%95%D7%AA%20%D7%A1%D7%99%D7%A0%D7%95%D7%9F%20%5B%5B%D7%A6%D7%90%D7%98_AI_%D7%91%D7%A0%D7%98%D7%A4%D7%A8%D7%99%7C%D7%94%D7%99%D7%9B%D7%A0%D7%A1%D7%95%20%D7%9C%D7%9B%D7%90%D7%9F%20%D7%9C%D7%94%D7%A1%D7%91%D7%A8%20%D7%9E%D7%A4%D7%95%D7%A8%D7%98%5D%5D%22%2C%22noteSiteEn%22:%22For%20images%20on%20this%20website%20to%20work%20you%20need%20to%20set%20%5C%22Filter%20content%20that%20is%20known%20as%20personal%20or%20private%5C%22%20%5B%5BAI_Chats_in_NetFree%7CClick%20here%20to%20read%20more%5D%5D%22%7D"></script>
 <script src="//netfree.link/injection-script/go-payment.js" type="text/javascript" async></script>
 <script src="//netfree.link/injection-script/popup-card-init.js" type="text/javascript" async></script>
+
+
+
+
+
+
+

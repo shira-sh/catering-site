@@ -1,5 +1,4 @@
 
-/* a11y-widget.js (ES5) - Drop-in | merged: working functionality + accordion UI */
 (function () {
 function byId(id) { return document.getElementById(id); }
 function hasClass(el, c) { return el && el.classList && el.classList.contains(c); }
@@ -349,7 +348,15 @@ btn.setAttribute('aria-haspopup', 'dialog');
 btn.setAttribute('aria-controls', 'fontPanel');
 btn.setAttribute('aria-label', t('open'));
 btn.innerHTML =
-'<span aria-hidden="true">♿</span>';
+'<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+'  <circle cx="39" cy="39" r="36" fill="#B88932"/>' +
+'  <circle cx="39" cy="39" r="27" stroke="#FFF8E8" stroke-width="4"/>' +
+'  <circle cx="39" cy="25" r="4.5" fill="#FFF8E8"/>' +
+'  <path d="M23 34C28.5 32.5 33.8 31.8 39 31.8C44.2 31.8 49.5 32.5 55 34" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
+'  <path d="M39 32V45" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
+'  <path d="M39 45L31 57" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
+'  <path d="M39 45L47 57" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
+'</svg>';
 
     var overlay = document.createElement('div');
     overlay.id = 'fontOverlay';
@@ -697,6 +704,8 @@ function initPanel() {
     function open() {
         panel.hidden = false;
         overlay.hidden = false;
+        addClass(openBtn, 'is-open');
+        openBtn.setAttribute('aria-expanded', 'true');
 
         // fallback נגד CSS שמבטל hidden
         panel.style.display = 'block';
@@ -708,6 +717,8 @@ function initPanel() {
     function close() {
         panel.hidden = true;
         overlay.hidden = true;
+        removeClass(openBtn, 'is-open');
+        openBtn.setAttribute('aria-expanded', 'false');
 
         // fallback נגד CSS שמבטל hidden
         panel.style.display = 'none';
@@ -1193,8 +1204,12 @@ function initTargetSize() {
         if (tag === 'button') return true;
         if (tag === 'a' && el.getAttribute('href')) return true;
         if (tag === 'input' || tag === 'select' || tag === 'textarea') return true;
+        if (tag === 'summary') return true;
+        if (tag === 'label' && el.getAttribute('for')) return true;
+        if (el.getAttribute('onclick')) return true;
+        if (el.getAttribute('data-clickable') === 'true') return true;
         var role = el.getAttribute('role');
-        if (role === 'button') return true;
+        if (role === 'button' || role === 'link' || role === 'menuitem' || role === 'tab' || role === 'checkbox' || role === 'radio' || role === 'switch') return true;
         var tabindex = el.getAttribute('tabindex');
         if (tabindex !== null && tabindex !== '-1') return true;
         return false;
@@ -1206,18 +1221,22 @@ function initTargetSize() {
         el.setAttribute('data-a11y-target-checked', '1');
 
         if (isHidden(el) || !isInteractive(el)) return;
+        if (el.closest && el.closest('#fontPanel, #fontOpenBtn, #fontOverlay, #a11ySkipLink')) return;
 
         var r = el.getBoundingClientRect();
         if (!r) return;
-        if (r.width >= 44 && r.height >= 44) return;
-
+        if (!el.hasAttribute('data-a11y-target-style')) {
+            el.setAttribute('data-a11y-target-style', el.getAttribute('style') || '');
+        }
+        el.style.minWidth = Math.ceil(r.width * 2) + 'px';
+        el.style.minHeight = Math.ceil(r.height * 2) + 'px';
         addClass(el, 'a11y-target-fix');
     }
 
     function scanRoot(root) {
         if (!root || root.nodeType !== 1) return;
         if (isInteractive(root)) mark(root);
-        var sel = 'button, a[href], input[type="button"], input[type="submit"], input, select, textarea, [role="button"], [data-role="button"], [tabindex]:not([tabindex="-1"])';
+        var sel = 'button, a[href], input[type="button"], input[type="submit"], input, select, textarea, summary, label[for], [onclick], [data-clickable="true"], [role="button"], [role="link"], [role="menuitem"], [role="tab"], [role="checkbox"], [role="radio"], [role="switch"], [data-role="button"], [tabindex]:not([tabindex="-1"])';
         var list;
         try { list = root.querySelectorAll(sel); } catch (e) { list = []; }
         for (var i = 0; i < list.length; i++) mark(list[i]);
@@ -1225,11 +1244,19 @@ function initTargetSize() {
 
     function clearAll() {
         var list;
-        try { list = wrap.querySelectorAll('.a11y-target-fix'); } catch (e) { list = []; }
-        for (var i = 0; i < list.length; i++) removeClass(list[i], 'a11y-target-fix');
+        try { list = document.body.querySelectorAll('.a11y-target-fix'); } catch (e) { list = []; }
+        for (var i = 0; i < list.length; i++) {
+            removeClass(list[i], 'a11y-target-fix');
+            if (list[i].hasAttribute('data-a11y-target-style')) {
+                var oldStyle = list[i].getAttribute('data-a11y-target-style');
+                if (oldStyle) list[i].setAttribute('style', oldStyle);
+                else list[i].removeAttribute('style');
+                list[i].removeAttribute('data-a11y-target-style');
+            }
+        }
 
         var checked;
-        try { checked = wrap.querySelectorAll('[data-a11y-target-checked="1"]'); } catch (e) { checked = []; }
+        try { checked = document.body.querySelectorAll('[data-a11y-target-checked="1"]'); } catch (e) { checked = []; }
         for (var j = 0; j < checked.length; j++) checked[j].removeAttribute('data-a11y-target-checked');
     }
 
@@ -1622,8 +1649,8 @@ function initAll() {
             fb.style.position = 'fixed';
             fb.style.bottom = '20px';
             fb.style.right = '20px';
-            fb.style.width = fb.style.width || '64px';
-            fb.style.height = fb.style.height || '64px';
+            fb.style.width = fb.style.width || '78px';
+            fb.style.height = fb.style.height || '78px';
             fb.style.display = 'flex';
             fb.style.alignItems = 'center';
             fb.style.justifyContent = 'center';
@@ -1674,6 +1701,3 @@ function initAll() {
 
 onReady(initAll);
 })();
-
-
-Close

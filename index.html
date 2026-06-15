@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 
 <head>
@@ -42,7 +42,7 @@
   <meta property="og:image" content="https://giliscatering.co.il/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="גיליז קייטרינג – קייטרינג בשרי במרכז" />L
+  <meta property="og:image:alt" content="גיליז קייטרינג – קייטרינג בשרי במרכז" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="גיליז קייטרינג | קייטרינג בשרי במרכז" />
@@ -68,46 +68,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   
   <!-- Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Fredoka:wght@300..700&family=Heebo:wght@100..900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
 
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="a11y-widget.css" />
 
-  <!-- A11y / Utility (לא משנה עיצוב קיים; רק נגישות/SEO) -->
-  <style>
-    /* נגישות: sr-only + skip-link בלי לפגוע בעיצוב */
-    .sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
-
-    .skip-link {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      z-index: 9999;
-      padding: 10px 12px;
-      background: #fff;
-      color: #000;
-      border: 2px solid currentColor;
-      border-radius: 8px;
-      transform: translateY(-140%);
-      transition: transform .15s ease;
-    }
-
-    .skip-link:focus {
-      transform: translateY(0);
-    }
-  </style>
 
   <script src="a11y-widget.js" defer></script>
 
@@ -196,13 +163,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a class="skip-link" href="#products">דילוג לבחירת תפריט</a>
 
   <noscript>
-    <div style="margin:16px;padding:12px;border:1px solid rgba(0,0,0,.15);border-radius:12px;background:#fff;">
+    <div class="noscript-note">
       כדי לבחור דילים, לפתוח תמונות ולבצע הזמנה, יש להפעיל JavaScript בדפדפן.
     </div>
   </noscript>
 
   <!-- ===== ICONS SPRITE ===== -->
-  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+  <svg aria-hidden="true" class="svg-sprite" xmlns="http://www.w3.org/2000/svg">
     <symbol id="gi-phone" viewBox="0 0 24 24">
       <path d="M7 3h3l1.2 5-2.1 1.3a13.5 13.5 0 0 0 5.6 5.6L16 12.8 21 14v3c0 1.1-.9 2-2 2C10.2 19 5 13.8 5 5c0-1.1.9-2 2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
     </symbol>
@@ -239,9 +206,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- ===== HEADER ===== -->
     <header class="top-header" role="banner">
       <div class="header-inner">
+        <a class="top-home-link" href="index.html" aria-label="חזרה לדף הבית"><span aria-hidden="true">‹</span> חזרה לדף הבית</a>
         <img src="assets/logo.png" class="logo" alt="לוגו גיליז קייטרינג" loading="eager" decoding="async" />
         <!-- ✅ H1 יחיד -->
         <h1 class="logoTitle">קייטרינג לשבתות ואזכרות</h1>
+        <svg class="header-ornament" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 120" width="100%" height="120" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="headerGold" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FFF7C5"/>
+              <stop offset="15%" stop-color="#F9E08A"/>
+              <stop offset="35%" stop-color="#E4BE5B"/>
+              <stop offset="50%" stop-color="#B8860B"/>
+              <stop offset="70%" stop-color="#D9A441"/>
+              <stop offset="85%" stop-color="#F7DC84"/>
+              <stop offset="100%" stop-color="#8C6500"/>
+            </linearGradient>
+            <filter id="headerGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g filter="url(#headerGlow)" stroke="url(#headerGold)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <line x1="610"
+      y1="60"
+      x2="890"
+      y2="60"
+      stroke="url(#headerGold)"
+      stroke-width="4" />
+            <path d="M285 60 C275 52 264 52 250 60 C264 68 275 68 285 60 Z" fill="url(#headerGold)" stroke="none"/>
+            <path d="M285 60 C300 28 340 28 355 60 C340 92 300 92 285 60"/>
+            <path d="M350 60 C360 44 378 44 388 60 C378 76 360 76 350 60"/>
+            <path d="M385 60 C405 18 455 18 475 60 C455 102 405 102 385 60"/>
+            <path d="M430 45 C442 50 445 63 433 73 C421 63 423 50 430 45 Z" fill="url(#headerGold)" stroke="none"/>
+            <circle cx="432" cy="60" r="3.5" fill="#FFF7C5" stroke="none"/>
+            <path d="M472 60 C482 44 500 44 510 60 C500 76 482 76 472 60"/>
+            <path d="M505 60 C520 28 560 28 575 60 C560 92 520 92 505 60"/>
+            <path d="M575 60 C585 52 596 52 610 60 C596 68 585 68 575 60 Z" fill="url(#headerGold)" stroke="none"/>
+            <line x1="610" y1="60" x2="890" y2="60"/>
+          </g>
+        </svg>
         <img src="assets/LandoNewLogo.svg" class="kosher" alt="לוגו הכשרות" loading="lazy" decoding="async" />
       </div>
     </header>
@@ -271,8 +277,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>בחרו תפריט כאן למטה בקלות, ואנחנו נדאג שהאוכל יגיע עד אליכם.</p>
         <p class="small-note">גיליז קייטרינג • מרכז</p>
 
-        <p class="FOR_CTA" style="margin-top:10px;">
-          <a class="cta-main" href="#products" style="width: 100%;">לבחירת תפריט</a>
+        <p class="FOR_CTA u-mt-10">
+          <a class="cta-main u-full-width" href="#products">לבחירת תפריט</a>
         </p>
       </div>
     </section>
@@ -347,7 +353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             גיליז קייטרינג נותן מענה לאירועים קטנים וגדולים במרכז, עם תפריטים ברורים לבחירה, מנות חמות ושירות זמין.
             אנחנו מקפידים על סדר, ניקיון ושקיפות מלאה בתהליך ההזמנה. בשרים גים ולחמים ברמ הכי גבוהה ובכשרות מהודרת.
           </p>
-          <p class="notes-sub" style="margin-top:10px;">
+          <p class="notes-sub u-mt-10">
             תוכלו לבחור כאן דיל בסיסי או דיל מורחב ולהתקדם במהירות.
             אזור שירות: תל אביב, ראשון לציון, בת ים, חולון, רמת גן והסביבה (בהתאם לזמינות).
           </p>
@@ -360,7 +366,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p class="testimonials-sub">ברגעים שצריך רגישות, דיוק ושקט נפשי</p>
 
         <div class="t-carousel" aria-label="קרוסלת המלצות">
-          <button class="t-arrow t-prev" type="button" aria-label="המלצה קודמת">‹</button>
+          <button class="t-prev" type="button" aria-label="המלצה קודמת">‹</button>
 
           <div class="t-viewport">
             <div class="t-track" id="tTrack">
@@ -396,7 +402,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
           </div>
 
-          <button class="t-arrow t-next" type="button" aria-label="המלצה הבאה">›</button>
+          <button type="button" aria-label="המלצה הבאה">›</button>
         </div>
 
         <div class="t-dots" id="tDots" aria-label="בחירת המלצה"></div>
@@ -738,3 +744,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </body>
 
 </html>
+
+
+
+
+
