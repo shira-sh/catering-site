@@ -1284,7 +1284,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var saladsLeft = LIMIT_SALADS - saladsTotal;
         setRemainingHint(
           "salads-remaining",
-          "מותר לבחור עד " + LIMIT_SALADS + " סלטים בסך הכל. נבחרו " + saladsTotal + ". " +
+          "ניתן לבחור עד " + LIMIT_SALADS + " סלטים בסך הכל. נבחרו " + saladsTotal + ". " +
           ((saladsLeft > 0) ? ("נותרו לך עוד " + saladsLeft + " לבחירה.") : "הגעת למקסימום הסלטים. כדי לבחור סלט אחר, בטל/י בחירה קיימת או הורד/י כמות.")
         );
 
@@ -1292,7 +1292,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var sidesLeft = LIMIT_SIDES - sidesTotal;
         setRemainingHint(
           "sides-remaining",
-          "מותר לבחור עד " + LIMIT_SIDES + " תוספות בסך הכל. נבחרו " + sidesTotal + ". " +
+          "ניתן לבחור עד " + LIMIT_SIDES + " תוספות בסך הכל. נבחרו " + sidesTotal + ". " +
           ((sidesLeft > 0) ? ("נותרו לך עוד " + sidesLeft + " לבחירה.") : "הגעת למקסימום התוספות. כדי לבחור תוספת אחרת, בטל/י בחירה קיימת או הורד/י כמות.")
         );
 
@@ -1304,14 +1304,14 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var breadsLeft = LIMIT_BREADS - breadsTotal;
         setRemainingHint(
           "breads-remaining",
-          "מותר לבחור " + LIMIT_BREADS + " סוג לחם. נבחרו " + breadsTotal + ". " +
+          "ניתן לבחור " + LIMIT_BREADS + " סוג לחם. נבחרו " + breadsTotal + ". " +
           ((breadsLeft > 0) ? "נותר לך לבחור לחם אחד." : "נבחר לחם. כדי להחליף, בטל/י את הבחירה הנוכחית.")
         );
 
         var selectedMainTypes = qsAll(".main-check:checked").length;
         var typesLeft = LIMIT_MAIN_TYPES - selectedMainTypes;
         var mainParts = [
-          "מותר לבחור עד " + LIMIT_MAIN_TYPES + " סוגי עיקריות, ובכמות כוללת עד " + servings + " מנות.",
+          "ניתן לבחור עד " + LIMIT_MAIN_TYPES + " סוגי עיקריות, ובכמות כוללת עד " + servings + " מנות.",
           "נבחרו " + selectedMainTypes + " סוגים ו-" + mainsTotal + " מנות."
         ];
 
