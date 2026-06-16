@@ -8,8 +8,8 @@
 
   <!-- ✅ SEO: Title + Description (נקיים, לא ספאמיים) -->
   <title>דיל בסיסי | גיליז קייטרינג – החל מ־49 ₪ למנה במרכז</title>
-  <meta name="description"
-    content="דיל בסיסי של גיליז קייטרינג – החל מ־49 ₪ למנה. כולל לחמניה אישית, 7 סלטים, 3 תוספות ו־3 עיקריות לבחירה. ממלאים טופס ונציג חוזר עם הצעת מחיר." />
+   <meta name="description"
+    content="דיל בסיסי של גיליז קייטרינג – החל מ־49 ₪ למנה. כולל לחמניה אישית, 7 סלטים, 3 תוספות ו־3 עיקריות לבחירה. ממלאים טופס ונציג חוזר לאישור עיסקה." />
 
   <!-- ✅ Canonical + Robots -->
   <link rel="canonical" href="https://giliscatering.co.il/bsisi.html" />
@@ -34,7 +34,7 @@
   <meta property="og:site_name" content="גיליז קייטרינג" />
   <meta property="og:title" content="דיל בסיסי | גיליז קייטרינג – החל מ־49 ₪ למנה" />
   <meta property="og:description"
-    content="כולל לחמניה אישית, 7 סלטים, 3 תוספות ו־3 עיקריות לבחירה. ממלאים טופס ונציג חוזר עם הצעת מחיר." />
+    content="כולל לחמניה אישית, 7 סלטים, 3 תוספות ו־3 עיקריות לבחירה. ממלאים טופס ונציג חוזר לאישור הזמנה." />
   <meta property="og:url" content="https://giliscatering.co.il/bsisi.html" />
   <meta property="og:image" content="https://giliscatering.co.il/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -44,7 +44,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="דיל בסיסי | גיליז קייטרינג – החל מ־49 ₪ למנה" />
   <meta name="twitter:description"
-    content="כולל לחמניה אישית, 7 סלטים, 3 תוספות ו־3 עיקריות לבחירה. נציג חוזר עם הצעת מחיר." />
+    content="כולל לחמניה אישית, 7 סלטים, 3 תוספות ו־3 עיקריות לבחירה. נציג חוזר לאישור הזמנה." />
   <meta name="twitter:image" content="https://giliscatering.co.il/assets/og.jpg" />
 
   <!-- Fonts -->
@@ -1559,7 +1559,7 @@ function buildItemsArray(data) {
         var notes = ($("orderNotes").value || "").trim();
 
         var msg = "";
-        msg += "שלום, אשמח להצעת מחיר (עבור מנה בסיסית) 🙂\n\n";
+        msg += "שלום, אשמח לאישור הזמנה (עבור מנה בסיסית) 🙂\n\n";
         msg += "תאריך האירוע: " + date + "\n";
         msg += "שעה משוערת: " + time + "\n\n";
         msg += "שם: " + name + "\n";
@@ -1648,7 +1648,7 @@ function buildItemsArray(data) {
           console.log("payload -> Make:", payload);
 
           sendOrderToMake(payload)
-            .then(function () { alert("נשלח בהצלחה! נציג יחזור אליך עם הצעת מחיר 🙂"); })
+            .then(function () { alert("נשלח בהצלחה! נציג יחזור אליך לאישור הזמנה  🙂"); })
             .catch(function (err) {
               console.error(err);
               alert("לא הצלחתי לשלוח כרגע. נסי שוב.");
