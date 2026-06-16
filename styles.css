@@ -427,7 +427,7 @@ body.a11y-on .logoTitle{
     font-size: clamp(1.05rem, 4.8vw, 2.1rem);
     line-height: 1.35;
     font-weight: initial;
-    margin: 24px 86px;
+  
     text-wrap: balance;
 }
 .page-home .hero p.small-note{
