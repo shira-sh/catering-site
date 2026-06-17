@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סיכום הזמנה - גיליז קייטרינג</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="order-summary-page">
+  <main class="page">
+    <header class="header">
+      <h1 class="brand">גיליז קייטרינג</h1>
+      <p class="subtitle">סיכום הזמנה</p>
+      <div class="badge">מסמך הזמנה דיגיטלי</div>
+    </header>
+
+    <section class="content">
+      <div class="notice">
+        פרטי ההזמנה מוצגים כאן כפי שנשלחו מהאתר. יש לבדוק את הפרטים ולאשר מול הלקוח.
+      </div>
+
+      <section class="section" aria-labelledby="customer-details-title">
+        <h2 class="section-title" id="customer-details-title">פרטי לקוח</h2>
+        <div class="grid">
+          <div class="field">
+            <span class="label">שם לקוח</span>
+            <span class="value" id="customerName"></span>
+          </div>
+
+          <div class="field">
+            <span class="label">טלפון</span>
+            <span class="value" id="phone"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="event-details-title">
+        <h2 class="section-title" id="event-details-title">פרטי האירוע</h2>
+        <div class="grid">
+          <div class="field">
+            <span class="label">תאריך אירוע</span>
+            <span class="value" id="date"></span>
+          </div>
+
+          <div class="field">
+            <span class="label">שעה</span>
+            <span class="value" id="time"></span>
+          </div>
+
+          <div class="field">
+            <span class="label">סוג אירוע</span>
+            <span class="value" id="eventType"></span>
+          </div>
+
+          <div class="field">
+            <span class="label">כמות סועדים</span>
+            <span class="value" id="guests"></span>
+          </div>
+
+          <div class="field full">
+            <span class="label">כתובת</span>
+            <span class="value" id="address"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="order-details-title">
+        <h2 class="section-title" id="order-details-title">פרטי ההזמנה</h2>
+        <div class="grid">
+          <div class="field">
+            <span class="label">דיל נבחר</span>
+            <span class="value" id="deal"></span>
+          </div>
+
+          <div class="field">
+            <span class="label">מחיר / הערכת מחיר</span>
+            <span class="value" id="price"></span>
+          </div>
+
+          <div class="field full">
+            <span class="label">הערות מיוחדות</span>
+            <span class="value notes" id="notes"></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="btn btn-primary" id="whatsappBtn" href="https://wa.me/972559314466" target="_blank" rel="noopener">שליחה ללקוח בוואטסאפ</a>
+        <button class="btn btn-secondary" id="printBtn" type="button">שמירה / הדפסה כ-PDF</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      תודה שבחרתם גיליז קייטרינג | המסמך הופק אוטומטית מהאתר
+    </footer>
+  </main>
+
+  <script>
+    function getParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || "";
+    }
+
+    const data = {
+      name: getParam("name"),
+      phone: getParam("phone"),
+      date: getParam("date"),
+      time: getParam("time"),
+      eventType: getParam("eventType"),
+      guests: getParam("guests"),
+      address: getParam("address"),
+      deal: getParam("deal"),
+      price: getParam("price"),
+      notes: getParam("notes")
+    };
+
+    document.getElementById("customerName").innerText = data.name || "לא צוין";
+    document.getElementById("phone").innerText = data.phone || "לא צוין";
+    document.getElementById("date").innerText = data.date || "לא צוין";
+    document.getElementById("time").innerText = data.time || "לא צוין";
+    document.getElementById("eventType").innerText = data.eventType || "לא צוין";
+    document.getElementById("guests").innerText = data.guests || "לא צוין";
+    document.getElementById("address").innerText = data.address || "לא צוין";
+    document.getElementById("deal").innerText = data.deal || "לא צוין";
+    document.getElementById("price").innerText = data.price || "לא צוין";
+    document.getElementById("notes").innerText = data.notes || "אין הערות";
+
+    const currentLink = window.location.href;
+
+    const message =
+      "שלום " + (data.name || "") + ",%0A" +
+      "מצורף סיכום ההזמנה שלך מגיליז קייטרינג:%0A" +
+      currentLink + "%0A%0A" +
+      "נא לאשר שהפרטים נכונים.";
+
+    const cleanPhone = (data.phone || "").replace(/[^0-9]/g, "");
+    let whatsappPhone = cleanPhone;
+
+    if (whatsappPhone.startsWith("0")) {
+      whatsappPhone = "972" + whatsappPhone.substring(1);
+    }
+
+    const whatsappBtn = document.getElementById("whatsappBtn");
+    if (whatsappPhone) {
+      whatsappBtn.href = "https://wa.me/" + whatsappPhone + "?text=" + message;
+      whatsappBtn.removeAttribute("aria-disabled");
+    } else {
+      whatsappBtn.removeAttribute("href");
+      whatsappBtn.setAttribute("aria-disabled", "true");
+    }
+
+    document.getElementById("printBtn").addEventListener("click", function () {
+      window.print();
+    });
+  </script>
+  <script src="cookie-consent-config.js"></script>
+  <script src="cookie-consent.bundle.js" defer></script>
+</body>
+</html>
+
+
+
