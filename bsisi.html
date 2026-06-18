@@ -1340,7 +1340,8 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var popup = $("summary-popup");
         popup.style.display = "block";
         popup.setAttribute("aria-hidden", "false");
-        validatePopupForm();
+        popupFormWasSubmitted = false;
+        validatePopupForm(false);
 
         _popupLastFocus = document.activeElement;
 
@@ -1431,7 +1432,9 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         return false;
       }
 
-      function validatePopupForm() {
+      var popupFormWasSubmitted = false;
+
+      function validatePopupForm(showErrors) {
         var nameEl = $("customerName");
         var addrEl = $("deliveryAddress");
         var phoneEl = $("customerPhone");
@@ -1453,24 +1456,50 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var okPhone = isValidILPhone(phone);
         var okDate = date.length > 0;
         var okTime = time.length > 0 && !timeEl.disabled;
+        var allOk = okName && okAddr && okPhone && okDate && okTime;
+        var missingFields = [];
+        var invalidFields = [];
 
-        setFieldValidity(nameEl, okName);
-        setFieldValidity(addrEl, okAddr);
-        setFieldValidity(phoneEl, okPhone);
-        setFieldValidity(dateEl, okDate);
-        setFieldValidity(timeEl, okTime);
+        if (!name.length) missingFields.push("שם המזמין");
+        else if (!okName) invalidFields.push("שם המזמין - לפחות 2 תווים");
+
+        if (!addr.length) missingFields.push("כתובת למשלוח");
+        else if (!okAddr) invalidFields.push("כתובת למשלוח - נא למלא כתובת מלאה");
+
+        if (!phone.length) missingFields.push("טלפון לחזרה");
+        else if (!okPhone) invalidFields.push("טלפון לחזרה - מספר ישראלי תקין");
+
+        if (!okDate) missingFields.push("תאריך האירוע");
+        if (!okTime) missingFields.push("שעת משלוח משוערת");
+
+        if (showErrors) {
+          setFieldValidity(nameEl, okName);
+          setFieldValidity(addrEl, okAddr);
+          setFieldValidity(phoneEl, okPhone);
+          setFieldValidity(dateEl, okDate);
+          setFieldValidity(timeEl, okTime);
+        } else {
+          setFieldValidity(nameEl, true);
+          setFieldValidity(addrEl, true);
+          setFieldValidity(phoneEl, true);
+          setFieldValidity(dateEl, true);
+          setFieldValidity(timeEl, true);
+        }
 
         var msg = "";
-        if (!okName) msg = "יש אי־תקינות בשדה: שם המזמין (לפחות 2 תווים).";
-        else if (!okAddr) msg = "יש אי־תקינות בשדה: כתובת למשלוח (נא למלא כתובת מלאה).";
-        else if (!okPhone) msg = "יש אי־תקינות בשדה: טלפון לחזרה (מספר ישראלי תקין).";
-        else if (!okDate) msg = "יש אי־תקינות בשדה: תאריך האירוע (נא לבחור תאריך).";
-        else if (!okTime) msg = "יש אי־תקינות בשדה: שעת משלוח משוערת (נא לבחור שעה).";
+        if (showErrors) {
+          if (missingFields.length) {
+            msg = "חסרים פרטים: " + missingFields.join(", ") + ".";
+          } else if (invalidFields.length) {
+            msg = "יש אי־תקינות בפרטים: " + invalidFields.join(", ") + ".";
+          }
+        }
 
         setFormError(msg);
 
-        var allOk = okName && okAddr && okPhone && okDate && okTime;
-        btn.disabled = !allOk;
+        if (btn.getAttribute("data-submitting") !== "true") btn.disabled = false;
+        btn.classList.toggle("is-disabled", !allOk);
+        btn.setAttribute("aria-disabled", allOk ? "false" : "true");
 
         return allOk;
       }
@@ -1598,13 +1627,13 @@ function buildItemsArray(data) {
       }
 
       function bindPopupFormEvents() {
-        var ids = ["customerName", "deliveryAddress", "customerPhone", "eventDate", "orderNotes"];
+        var ids = ["customerName", "deliveryAddress", "customerPhone", "eventDate", "eventTime", "orderNotes"];
         for (var i = 0; i < ids.length; i++) {
           var el = $(ids[i]);
           if (!el) continue;
-          el.addEventListener("input", validatePopupForm);
-          el.addEventListener("change", validatePopupForm);
-          el.addEventListener("blur", validatePopupForm);
+          el.addEventListener("input", function () { validatePopupForm(popupFormWasSubmitted); });
+          el.addEventListener("change", function () { validatePopupForm(popupFormWasSubmitted); });
+          el.addEventListener("blur", function () { validatePopupForm(popupFormWasSubmitted); });
         }
       }
 
@@ -1613,12 +1642,14 @@ function buildItemsArray(data) {
         if (!btn) return;
 
         btn.addEventListener("click", function () {
-          if (!validatePopupForm()) return;
+          popupFormWasSubmitted = true;
+          if (!validatePopupForm(true)) return;
 
           // var waUrl = "https://wa.me/" + WA_PHONE + "?text=" + encodeURIComponent(buildWhatsappText());
           // window.open(waUrl, "_blank");
 
           var oldText = btn.textContent;
+          btn.setAttribute("data-submitting", "true");
           btn.disabled = true;
           btn.textContent = "שולח...";
 
@@ -1654,8 +1685,9 @@ function buildItemsArray(data) {
               alert("לא הצלחתי לשלוח כרגע. נסי שוב.");
             })
             .finally(function () {
+              btn.removeAttribute("data-submitting");
               btn.textContent = oldText;
-              validatePopupForm();
+              validatePopupForm(popupFormWasSubmitted);
             });
         });
       }
@@ -1793,7 +1825,7 @@ function buildItemsArray(data) {
             timeEl.innerHTML = '<option value="">בחרי תאריך קודם</option>';
             timeEl.disabled = true;
             timeEl.value = "";
-            validatePopupForm();
+            validatePopupForm(popupFormWasSubmitted);
             return;
           }
 
@@ -1814,7 +1846,7 @@ function buildItemsArray(data) {
             timeEl.value = "";
           }
 
-          validatePopupForm();
+          validatePopupForm(popupFormWasSubmitted);
         }
 
         dateEl.addEventListener("change", refreshTimes);
@@ -1903,7 +1935,7 @@ function buildItemsArray(data) {
 
         initServingsChange();
 
-        validatePopupForm();
+        validatePopupForm(false);
         updateRemainingHints();
       }
 
@@ -1917,11 +1949,5 @@ function buildItemsArray(data) {
 </body>
 
 </html>
-
-
-
-
-
-
 
 

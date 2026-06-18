@@ -1176,7 +1176,8 @@ display: block;
   box-shadow:0 22px 50px rgba(0,0,0,.22);
 }
 .page-basic .btn:active{ transform:translateY(0); }
-.page-basic .btn:disabled{
+.page-basic .btn:disabled,
+.page-basic .btn.is-disabled{
   opacity:.55;
   cursor:not-allowed;
   transform:none !important;
