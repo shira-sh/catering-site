@@ -1039,6 +1039,10 @@ display: block;
   cursor:pointer;
   border-radius:0;
 }
+.page-basic .item input[type="checkbox"]:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:3px;
+}
 .page-basic .item input[type="checkbox"]:checked + label{
   font-weight:600;
   color:var(--primary);
@@ -1050,6 +1054,10 @@ display: block;
   border:1px solid rgba(0,0,0,.12);
   background:#fff;
   overflow:hidden;
+}
+.page-basic .number-picker:focus-within{
+  outline:3px solid #000;
+  outline-offset:3px;
 }
 .page-basic .number-picker select{
   width:100%;
@@ -1395,6 +1403,17 @@ display: block;
   overflow:hidden;
 }
 .page-basic .img-pop.is-open{ display:block; }
+.page-basic .sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
 .page-basic .img-pop img{ width:100%; height:auto; display:block; }
 .page-basic .img-pop-close{
   position:absolute;
@@ -1924,6 +1943,7 @@ h2{
   border-color:rgba(27,54,48,.45);
   outline:none;
 }
+
 .page-basic .menu-tab.is-active,
 .page-basic .menu-tab[aria-selected="true"],
 .page-basic .category-card[aria-pressed="true"]{
@@ -2341,4 +2361,10 @@ h2{
     border-radius:0;
   }
   .order-summary-page .actions{ display:none; }
+}
+
+/* Strong keyboard focus indicator - keep last so it wins across pages */
+:focus-visible{
+  outline:3px solid #000 !important;
+  outline-offset:3px !important;
 }

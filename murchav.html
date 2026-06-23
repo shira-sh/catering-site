@@ -272,7 +272,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         <div class="category-item">
           <button class="category-card category-button" type="button" data-open-panel="panel-starters" aria-pressed="false"><span class="category-icon"></span> מנות ראשונות</button>
           <div class="section menu-panel" id="panel-starters" role="region" aria-labelledby="panel-starters-title">
-          <h3 class="section-title">מנות ראשונות</h3>
+          <h3 class="section-title" id="panel-starters-title">מנות ראשונות</h3>
           <div id="starters-remaining" class="remaining-hint is-ok" aria-live="polite" aria-atomic="true"></div>
           <div id="starters" aria-label="רשימת מנות ראשונות"></div>
        
@@ -282,7 +282,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         <div class="category-item">
           <button class="category-card category-button" type="button" data-open-panel="panel-sides" aria-pressed="false"><span class="category-icon"></span> תוספות</button>
           <div class="section menu-panel" id="panel-sides" role="region" aria-labelledby="panel-sides-title">
-          <h3 class="section-title">תוספות</h3>
+          <h3 class="section-title" id="panel-sides-title">תוספות</h3>
           <div id="sides-remaining" class="remaining-hint is-ok" aria-live="polite" aria-atomic="true"></div>
           <div id="sides" class="grid" aria-label="רשימת תוספות"></div>
       
@@ -292,7 +292,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         <div class="category-item">
           <button class="category-card category-button" type="button" data-open-panel="panel-mains" aria-pressed="false"><span class="category-icon"></span> מנות עיקריות</button>
           <div class="section menu-panel" id="panel-mains" role="region" aria-labelledby="panel-mains-title">
-          <h3 class="section-title">מנות עיקריות</h3>
+          <h3 class="section-title" id="panel-mains-title">מנות עיקריות</h3>
           <div class="section-sub">המקסימום הכולל נקבע לפי מספר המנות שבחרת</div>
           <div id="mains-remaining" class="remaining-hint is-ok" aria-live="polite" aria-atomic="true"></div>
           <div id="mains" class="grid" aria-label="רשימת עיקריות"></div>
@@ -303,6 +303,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         <div class="category-item">
           <button class="category-card category-button" type="button" data-open-panel="panel-breads" aria-pressed="false"><span class="category-icon"></span> לחמים</button>
           <div class="section menu-panel" id="panel-breads" role="region" aria-labelledby="panel-breads-title">
+          <h3 class="section-title" id="panel-breads-title">לחמים</h3>
           <div id="breads-remaining" class="remaining-hint is-ok" aria-live="polite" aria-atomic="true"></div>
           <div id="breads" class="grid" aria-label="רשימת לחמים"></div>
           </div>
@@ -393,7 +394,8 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
   </a>
 
   <!-- IMAGE POPOVER -->
-  <div id="img-pop" class="img-pop" role="dialog" aria-label="תצוגה מקדימה של מנה" aria-hidden="true">
+  <div id="img-pop" class="img-pop" role="dialog" aria-modal="true" aria-labelledby="img-pop-title" aria-hidden="true">
+    <h2 id="img-pop-title" class="sr-only">תצוגה מקדימה של מנה</h2>
     <button id="img-pop-close" class="img-pop-close" type="button" aria-label="סגירה">×</button>
     <img id="img-pop-img" src="" alt="תצוגה מקדימה של מנה" loading="lazy" decoding="async">
   </div>
@@ -1027,6 +1029,8 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var sel = $("qty-" + type + "-" + idx);
         if (!cb || !sel) return;
 
+        var focusQtyAfterChange = false;
+
         if (cb.checked) {
           if (type === "main") {
             var checkedNow = qsAll(".main-check:checked").length;
@@ -1055,6 +1059,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
 
           sel.disabled = false;
           sel.value = String(defaultQty(type));
+          focusQtyAfterChange = true;
         } else {
           sel.disabled = true;
           sel.value = String(defaultQty(type));
@@ -1063,6 +1068,10 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         enforceTypeLimit(type);
         applyLocking(type);
         updateRemainingHints();
+
+        if (focusQtyAfterChange && cb.checked && !sel.disabled && sel.focus) {
+          sel.focus();
+        }
       }
 
       function handleQtyChange(type, idx) {
@@ -1097,6 +1106,12 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
               var cb = $(type + "-" + idx);
               var sel = $("qty-" + type + "-" + idx);
               if (cb) cb.addEventListener("change", function () { handleCheckboxChange(type, idx); });
+              if (cb) cb.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  cb.click();
+                }
+              });
               if (sel) sel.addEventListener("change", function () { handleQtyChange(type, idx); });
             })(i);
           }
@@ -1869,7 +1884,13 @@ items: buildItemsArray(data),
         });
 
         document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") closeImgPop();
+          var pop = $("img-pop");
+          if (!pop || !pop.classList.contains("is-open")) return;
+          if (e.key === "Escape") {
+            closeImgPop();
+            return;
+          }
+          if (e.key === "Tab") trapFocusInDialog(e, pop);
         });
 
         window.addEventListener("resize", function () {

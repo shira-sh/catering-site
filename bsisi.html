@@ -465,7 +465,8 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
   </a>
 
   <!-- IMAGE POPOVER -->
-  <div id="img-pop" class="img-pop" role="dialog" aria-label="תצוגה מקדימה של מנה" aria-hidden="true">
+  <div id="img-pop" class="img-pop" role="dialog" aria-modal="true" aria-labelledby="img-pop-title" aria-hidden="true">
+    <h2 id="img-pop-title" class="sr-only">תצוגה מקדימה של מנה</h2>
     <button id="img-pop-close" class="img-pop-close" type="button" aria-label="סגירה">×</button>
     <img id="img-pop-img" src="" alt="תצוגה מקדימה של מנה">
   </div>
@@ -990,6 +991,8 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         var sel = $("qty-" + type + "-" + idx);
         if (!cb || !sel) return;
 
+        var focusQtyAfterChange = false;
+
         if (cb.checked) {
           if (type === "main") {
             var checkedNow = qsAll(".main-check:checked").length;
@@ -1018,6 +1021,7 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
 
           sel.disabled = false;
           sel.value = String(defaultQty(type));
+          focusQtyAfterChange = true;
         } else {
           sel.disabled = true;
           sel.value = String(defaultQty(type));
@@ -1026,6 +1030,10 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
         enforceTypeLimit(type);
         applyLocking(type);
         updateRemainingHints();
+
+        if (focusQtyAfterChange && cb.checked && !sel.disabled && sel.focus) {
+          sel.focus();
+        }
       }
 
       function handleQtyChange(type, idx) {
@@ -1060,6 +1068,12 @@ M267 42L268 41L271 41L272 42L272 45L269 47L267 45Z"/>
               var cb = $(type + "-" + idx);
               var sel = $("qty-" + type + "-" + idx);
               if (cb) cb.addEventListener("change", function () { handleCheckboxChange(type, idx); });
+              if (cb) cb.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  cb.click();
+                }
+              });
               if (sel) sel.addEventListener("change", function () { handleQtyChange(type, idx); });
             })(i);
           }
@@ -1786,7 +1800,13 @@ function buildItemsArray(data) {
         });
 
         document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") closeImgPop();
+          var pop = $("img-pop");
+          if (!pop || !pop.classList.contains("is-open")) return;
+          if (e.key === "Escape") {
+            closeImgPop();
+            return;
+          }
+          if (e.key === "Tab") trapFocusInDialog(e, pop);
         });
 
         window.addEventListener("resize", function () {
@@ -1949,5 +1969,3 @@ function buildItemsArray(data) {
 </body>
 
 </html>
-
-
