@@ -1684,36 +1684,27 @@ html.a11y-spacing-2 #zoomWrap * {
 
 @media (max-width: 600px) {
   #fontOpenBtn {
-    width: auto !important;
-    height: 58px !important;
-    min-width: 132px !important;
-    min-height: 58px !important;
-    padding: 7px 14px !important;
-    gap: 9px !important;
-    border-radius: 999px !important;
-    background: #B88932 !important;
-    color: #FFF8E8 !important;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, .22) !important;
-    overflow: hidden !important;
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+    bottom: 86px !important;
+    inset-block-end: 86px !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
   }
 
   #fontOpenBtn svg {
-    width: 42px !important;
-    height: 42px !important;
+    width: 58px !important;
+    height: 58px !important;
     flex: 0 0 auto;
   }
 
-  #fontOpenBtn svg circle:first-child {
-    fill: transparent;
-  }
-
   #fontOpenBtn .a11y-open-label {
-    display: inline-block !important;
-    font-family: var(--a11y-font);
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1;
-    white-space: nowrap;
-    color: #FFF8E8;
+    display: none !important;
   }
 }
