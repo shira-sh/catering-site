@@ -356,7 +356,8 @@ btn.innerHTML =
 '  <path d="M39 32V45" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
 '  <path d="M39 45L31 57" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
 '  <path d="M39 45L47 57" stroke="#FFF8E8" stroke-width="4" stroke-linecap="round"/>' +
-'</svg>';
+'</svg>' +
+'<span class="a11y-open-label">' + t('open') + '</span>';
 
     var overlay = document.createElement('div');
     overlay.id = 'fontOverlay';
@@ -1644,13 +1645,20 @@ function initAll() {
     function ensureFloatingBtnTop() {
         var fb = byId('fontOpenBtn');
         if (!fb || !document.body) return;
+        function applyFloatingBtnLayout(el) {
+            var isMobile = false;
+            try { isMobile = window.matchMedia && window.matchMedia('(max-width: 600px)').matches; } catch (e) {}
+            el.style.width = isMobile ? 'auto' : '78px';
+            el.style.height = isMobile ? '58px' : '78px';
+            el.style.minWidth = isMobile ? '132px' : '78px';
+            el.style.minHeight = isMobile ? '58px' : '78px';
+        }
         try {
             // force inline styles so other scripts/CSS can't hide it
             fb.style.position = 'fixed';
-            fb.style.bottom = '20px';
+            fb.style.bottom = '84px';
             fb.style.right = '20px';
-            fb.style.width = fb.style.width || '78px';
-            fb.style.height = fb.style.height || '78px';
+            applyFloatingBtnLayout(fb);
             fb.style.display = 'flex';
             fb.style.alignItems = 'center';
             fb.style.justifyContent = 'center';
@@ -1671,11 +1679,17 @@ function initAll() {
                         try { document.body.appendChild(f); } catch (e) {}
                     }
                     // re-apply enforced inline styles
-                    try { f.style.zIndex = '2147483647'; f.style.visibility = 'visible'; f.style.pointerEvents = 'auto'; } catch (e) {}
+                    try {
+                        applyFloatingBtnLayout(f);
+                        f.style.zIndex = '2147483647';
+                        f.style.visibility = 'visible';
+                        f.style.pointerEvents = 'auto';
+                    } catch (e) {}
                 });
                 fbObs.observe(document.body, { childList: true, subtree: true });
             }
         } catch (e) {}
+        try { window.addEventListener('resize', function () { applyFloatingBtnLayout(fb); }); } catch (e) {}
     }
     try { ensureFloatingBtnTop(); } catch (e) {}
 
